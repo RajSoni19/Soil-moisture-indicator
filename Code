@@ -1,0 +1,33 @@
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0*27,16,2);
+
+int sensorpin=A1;
+int wet = 210;
+int dry=510;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  lcd.init();
+  lcd.backlight();
+  
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  int value=analogRead(sensorpin);
+  Serial.println(value);
+  lcd.setCursor(1,0);
+  lcd.print("Moisture sensor");
+  lcd.setCursor(3,1);
+  lcd.print(value);
+  lcd.print(" ");
+  lcd.setCursor(7,1);
+  lcd.print("--");
+  int pre=map(value,wet,dry,100,0);
+  lcd.setCursor(10,1);
+  lcd.print(pre);
+  lcd.print("%");
+  
+
+}
